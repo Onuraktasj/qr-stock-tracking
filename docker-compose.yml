@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: qrstock
+      POSTGRES_USER: qrstock
+      POSTGRES_PASSWORD: qrstock
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  server:
+    build: ./server
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/qrstock
+      SPRING_DATASOURCE_USERNAME: qrstock
+      SPRING_DATASOURCE_PASSWORD: qrstock
+      SPRING_JPA_HIBERNATE_DDL_AUTO: validate
+      JWT_SECRET: change-me
+      QR_SIGNING_SECRET: change-me
+    ports:
+      - "8080:8080"
+
+volumes:
+  postgres_data:
+
+
+

@@ -1,0 +1,11 @@
+target/
+server/target/
+*.iml
+.idea/
+.DS_Store
+mobile/build/
+mobile/.dart_tool/
+mobile/.packages
+mobile/pubspec.lock
+
+
